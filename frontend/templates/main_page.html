@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project Details Form</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main_page.css' %}">
+     <!-- Ensure the correct path to the CSS file -->
+
+</head>
+<body>
+
+    <!-- Your HTML fTorm for collecting project details -->
+    <h1>Web Page Design for Collect Project Details</h1><br>
+    <form method="POST" action="{% url 'add_project' %}">
+          {% csrf_token %}
+        <table>
+            <tr>
+                <th>Project Title:</th>
+                <td><input id="left" type="text" name="project_title" placeholder="Project Title" required></td>
+            </tr>
+            <tr class="spacer">
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <th>Company Name:</th>
+                <td><input id="left" type="text" name="company_name"  placeholder="Current Company Name" required></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+
+            <tr>
+                <th>Person Name:</th>
+                <td><input id="left" type="text" name="person_name" placeholder="Developer Name" required></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <th>Email_ID:</th>
+                <td><input id="left" type="text" name="email_id" placeholder="Email ID" required></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <th>Contact Number:</th>
+                <td><input id="left" type="text" name="phone_number" placeholder="Phone Number" required></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <th>Project Summary:</th>
+                <td><textarea name="project_summary" id="left" placeholder="Project Summary" maxlength="2500"></textarea></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <th>Project Planning:</th>
+                <td><textarea id="left" name="project_planning" placeholder="Project Planning Details" maxlength="2500"></textarea></td>
+            </tr>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <div id="additionalDetails">
+                    <th><input type='text' name="additional_title" placeholder='title' hidden="hidden"></th>
+                    <td><textarea name="additional_details" placeholder='details' hidden="hidden"></textarea></td>
+
+                </div>
+                    <button onclick="addAdditionalDetail()">Add Additional Detail</button>
+
+            </tr><br><br>
+            <tr class="spacer">
+        <td colspan="2">&nbsp;</td>
+    </tr>
+            <tr>
+                <th>Financial Details</th>
+                <td>
+                    <div id="center">
+                        <button onclick="addRow()">Add Row</button>
+                        <button onclick="addColumn()">Add Column</button><br><br>
+
+                        <!-- Table for inputting material and price details -->
+                        <table name="financial_table" id="myTable" border="2">
+                            <tr>
+                                <th>Tools or Others</th>
+                                <th>Tools version</th>
+                                <th>Price</th>
+
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="input1_1"></td>
+                                <td><input type="text" name="input1_2"></td>
+                                <td><input type="text" name="input1_3"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><button align="center" type="submit">Save</button></td>
+            </tr>
+
+        </table>
+        </form>
+
+        <h1>Saved Records</h1>
+        <table>
+            <tr>
+                <th>Project Title</th>
+                <th>Person Name</th>
+                <th>Action</th>
+            </tr>
+            {% for i in obj %}
+                <tr>
+                    <td>{{i.project_title}}</td>
+                    <td>{{i.person_name}}</td>
+                    <td>
+                        <a href="{% url 'edit_content' i.id %}">Edit</a>
+
+                        <form method="POST" hidden="hidden">
+                          {% csrf_token %}
+                        <table>
+                            <tr>
+                                <th>Project Title:</th>
+                                <td><input id="left" type="text" name="project_title" value="{{ record.project_title }}" autofocus></td>
+                            </tr>
+                            <tr class="spacer">
+                                <td colspan="2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th>Company Name:</th>
+                                <td><input id="left" type="text" name="company_name"  value="{{ record.company_name }}" autofocus></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+
+                            <tr>
+                                <th>Person Name:</th>
+                                <td><input id="left" type="text" name="person_name" value="{{ record.person_name }}" autofocus></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <th>Email_ID:</th>
+                                <td><input id="left" type="text" name="email_id" value="{{ record.email_id }}" autofocus></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <th>Contact Number:</th>
+                                <td><input id="left" type="text" name="phone_number" value="{{ record.phone_number }}" autofocus></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <th>Project Summary:</th>
+                                <td><textarea name="project_summary" id="left" value="{{ record.project_summary }}" maxlength="2500" autofocus></textarea></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <th>Project Planning:</th>
+                                <td><textarea id="left" name="project_planning" value="{{ record.project_planning }}" maxlength="2500" autofocus></textarea></td>
+                            </tr>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <div id="additionalDetails">
+                                    <th><input type='text' name="additional_title" placeholder='title' hidden="hidden"></th>
+                                    <td><textarea name="additional_details" placeholder='details' hidden="hidden"></textarea></td>
+                                    <td><input type="button" value="Add"></td>
+                                </div>
+                                    <button onclick="addAdditionalDetail()">Add Additional Detail</button>
+
+                            </tr><br><br>
+                            <tr class="spacer">
+                        <td colspan="2">&nbsp;</td>
+                    </tr>
+                            <tr>
+                                <th>Financial Details</th>
+                                <td>
+                                    <div id="center">
+                                        <button onclick="addRow()">Add Row</button>
+                                        <button onclick="addColumn()">Add Column</button><br><br>
+
+                                        <!-- Table for inputting material and price details -->
+                                        <table name="financial_table" id="myTable" border="2">
+                                            <tr>
+                                                <th>Tools or Others</th>
+                                                <th>Tools version</th>
+                                                <th>Price</th>
+
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" value="{{ record.input1_1 }}" autofocus></td>
+                                                <td><input type="text" value="{{ record.input1_2 }}" autofocus></td>
+                                                <td><input type="text" value="{{ record.input1_3 }}" autofocus></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td><button type="submit">Update</button></td>
+                            </tr>
+
+                        </table>
+                        </form>
+
+
+                        <a href="{% url 'delete_content' i.id %}">Delete</a>
+
+
+                    </td>
+                    <td><a href="{% url 'recreate_content' i.id %}">Reorder</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+    <!-- JavaScript for adding rows and columns to the table -->
+    <script>
+        function deleteRecord(recordId) {
+  fetch(`/frontend/delete/${recordId}/`, {
+    method: 'DELETE',
+    headers: {
+      'X-CSRFToken': getCookie('csrftoken'),
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        // Successful deletion
+        // Perform actions like updating UI
+      } else {
+        // Handle error response
+        response.json().then(data => {
+          console.error(data.error);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Get CSRF token
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = cookie.substring(name.length + 1);
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+         function addAdditionalDetail() {
+        // Create a new div to hold the additional detail
+        var newDetailDiv = document.createElement('div');
+
+        // Add input for title
+        var titleInput = document.createElement('input');
+        titleInput.type = 'text';
+        titleInput.value = 'project base paper title';
+        newDetailDiv.appendChild(titleInput);
+
+        // Add textarea for details
+        var detailsTextArea = document.createElement('textarea');
+        detailsTextArea.value = 'details';
+        newDetailDiv.appendChild(detailsTextArea);
+
+        // Append the new detail div to the 'additionalDetails' div
+        document.getElementById('additionalDetails').appendChild(newDetailDiv);
+    }
+    function addRow() {
+        var table = document.getElementById("myTable");
+        var row = table.insertRow(-1); // -1 will append the row at the end
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+
+        var cell3 = row.insertCell(2);
+
+        cell1.innerHTML = '<input type="text" name="input' + (table.rows.length) + '_1">';
+        cell2.innerHTML = '<input type="text" name="input' + (table.rows.length) + '_2">';
+
+        cell3.innerHTML = '<input type="text" name="input' + (table.rows.length) + '_3">';
+    }
+
+    function addColumn() {
+        var table = document.getElementById("myTable");
+
+        for (var i = 0; i < table.rows.length; i++) {
+            var cell = table.rows[i].insertCell(-1); // -1 will append the cell at the end
+            cell.innerHTML = '<input type="text" name="input' + (i + 1) + '_' + (table.rows[i].cells.length) + '">';
+        }
+    }
+        window.onload = function() {
+    const storedFormData = sessionStorage.getItem('formData');
+    if (storedFormData) {
+        const formData = JSON.parse(storedFormData);
+
+        // Fill form fields with the stored data
+        const form = document.getElementById('projectForm');
+        for (const key in formData) {
+            if (Object.prototype.hasOwnProperty.call(formData, key)) {
+                const field = form.elements[key];
+                if (field) {
+                    field.value = formData[key];
+                }
+            }
+        }
+    }
+};
+    </script>
+
+</body>
+</html>
