@@ -1,0 +1,17 @@
+#Commands for create the project and run the project
+
+1. create the new Django project
+django-admin startproject Django_web_page
+
+2. migrate the database
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+3. create the Admin super user
+python3 manage.py createsuperuser
+And provide the all details for check the database are added or not. It's not mandatory.
+
+
+4. run the server
+python3 manage.py runserver
+
