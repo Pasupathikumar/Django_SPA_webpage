@@ -12,4 +12,4 @@ Following a page refresh, the stored project details, such as the project title 
 
 An important initial step involves creating an admin superuser using the command 'python3 manage.py createsuperuser'.
 
-Additionally, the project requires Django packages to be installed. Use the 'requirements.txt' file to install all the necessary packages. To create the Django project and run it, follow the commands listed in the 'commands.txt' file.
+Additionally, the project requires Django packages to be installed. Use the 'requirements.txt' file to install all the necessary packages. To create the Django project and run it, follow the commands listed in the 'commands.txt' file. Using the 'commands.txt' file 'migration' folder is automatically created.
